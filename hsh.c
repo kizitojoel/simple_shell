@@ -30,17 +30,20 @@ int validate_path(char *path)
 void execute(char **args)
 {
 	pid_t subprocess;
+	int status;
 
 	subprocess = fork();
-	if (subprocess == -1) {
+	if (subprocess == -1)
 		perror("fork failed!\n");
-		return;
-	}
-	else if (subprocess == 0) {
+	else if (subprocess == 0)
+	{
 		execve(args[0], args, NULL);
-		perror("execve\n");
-		return;
+		printf("Unknown command\n");
+		exit(0);
 	}
+	else
+		wait(&status);
+
 }
 
 /**
@@ -50,45 +53,39 @@ void execute(char **args)
 int main() {
 	char *line = NULL;
 	size_t bufsize = 0;
-	ssize_t length;
+	ssize_t length = 0;
 	size_t index;
 	char **args, *token, *path;
 	int count = 0;
 
-	printf("$");
-
-        length = getline(&line, &bufsize, stdin);
-
-	if(feof(stdin)){
-		return (0);
-	}
-
-	if (length == -1)
+	while (length != -1)
 	{
-		printf("Error reading input.\n");
-		return (-1);
+		printf("$");
+		length = getline(&line, &bufsize, stdin);
+
+		for (index = 0; index < strlen(line); index++)
+			if (line[index] == ' ')
+				count++;
+
+		args = (char **) malloc(count * sizeof(char *));
+		token = strtok(line, " ");
+		index = 0;
+		while (token != NULL)
+		{
+			args[index] = token;
+			token = strtok(NULL, " ");
+			index++;
+		}
+
+		path = args[0];
+		if (validate_path(path) == -1)
+			continue;
+
+		execute(args);
+
+		free(args);
+		free(line);
+
 	}
-
-	for (index = 0; index < strlen(line); index++)
-		if (line[index] == ' ')
-			count++;
-
-        args = (char**)malloc(count * sizeof(char*));
-	token = strtok(line, " ");
-	index = 0;
-	while (token != NULL) {
-		args[index] = token;
-		token = strtok(NULL, " ");
-		index++;
-	}
-
-	path = args[0];
-	if (validate_path(path) == -1)
-		return (-1);
-
-	execute(args);
-
-	free(args);
-	free(line);
-	return main();
+	return (0);
 }
