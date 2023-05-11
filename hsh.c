@@ -46,6 +46,19 @@ void execute(char **args)
 
 }
 
+void remove_spaces(char *str)
+{
+	int length = strlen(str);
+	if (length > 0)
+	{
+		while (length > 0 && (str[length - 1] == ' ' || str[length - 1] == '\n' || str[length - 1] == '\r'))
+		{
+			str[length - 1] = '\0';
+			length--;
+		}
+	}
+}
+
 /**
  * main - entry point for the simple shell program
  * Return: 0 is success else -1
@@ -55,7 +68,7 @@ int main(void)
 	char *line = NULL;
 	size_t bufsize = 0;
 	ssize_t length = 0;
-	size_t index;
+	size_t index, len;
 	char **args, *token, *path;
 	int count = 0;
 
@@ -63,17 +76,18 @@ int main(void)
 	{
 		printf("$");
 		length = getline(&line, &bufsize, stdin);
-
-
-		for (index = 0; index < strlen(line); index++)
-			if (line[index] == ' ')
-				count++;
-		if (!count)
+		remove_spaces(line);
+                len = strlen(line);
+		if (line[0] == '\0' || line[0] == '\n')
 			continue;
+		for (index = 0; index < len; index++)
+			if (line[index] == ' ' || index == len - 1)
+				count++;
 
 		args = (char **) malloc(count * sizeof(char *));
 		token = strtok(line, " ");
 		index = 0;
+		count = 0;
 		while (token != NULL)
 		{
 			args[index] = token;
