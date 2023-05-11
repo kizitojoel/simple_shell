@@ -63,9 +63,12 @@ int main() {
 		printf("$");
 		length = getline(&line, &bufsize, stdin);
 
+
 		for (index = 0; index < strlen(line); index++)
 			if (line[index] == ' ')
 				count++;
+		if (!count)
+			continue;
 
 		args = (char **) malloc(count * sizeof(char *));
 		token = strtok(line, " ");
