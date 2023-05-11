@@ -71,11 +71,9 @@ void _strip(char *str)
  */
 int main(void)
 {
-	char *line = NULL;
-	size_t bufsize = 0;
 	ssize_t length = 0;
-	size_t index, len;
-	char **args, *token, *path;
+	size_t index, bufsize = 0;
+	char **args, *token, *path, *line = NULL;
 	int count = 0;
 
 	while (length != -1)
@@ -87,7 +85,7 @@ int main(void)
 			continue;
 
 		for (index = 0; index < strlen(line); index++)
-			if (line[index] == ' ' || index == len - 1)
+			if (line[index] == ' ' || index == strlen(line) - 1)
 				count++;
 
 		args = (char **) malloc(count * sizeof(char *));
