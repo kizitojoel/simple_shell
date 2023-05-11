@@ -11,7 +11,7 @@
 #include<sys/wait.h>
 
 int main(void);
-void execute(char **args);
+void execute_command(char **args);
 int validate_path(char *path);
 
 #endif

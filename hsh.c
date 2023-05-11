@@ -27,7 +27,7 @@ int validate_path(char *path)
  * execute - executes the passed command with the passed args
  * @args: the args to pass to the execve
  */
-void execute(char **args)
+void execute_command(char **args)
 {
 	pid_t subprocess;
 	int status;
@@ -46,12 +46,18 @@ void execute(char **args)
 
 }
 
-void remove_spaces(char *str)
+/**
+ * _strip - remove trailing spaces from string
+ * @str: the string to strip
+ */
+void _strip(char *str)
 {
 	int length = strlen(str);
+
 	if (length > 0)
 	{
-		while (length > 0 && (str[length - 1] == ' ' || str[length - 1] == '\n' || str[length - 1] == '\r'))
+		while (length > 0 && (str[length - 1] == ' ' ||
+		str[length - 1] == '\n' || str[length - 1] == '\r'))
 		{
 			str[length - 1] = '\0';
 			length--;
@@ -76,11 +82,11 @@ int main(void)
 	{
 		printf("$");
 		length = getline(&line, &bufsize, stdin);
-		remove_spaces(line);
-                len = strlen(line);
+		_strip(line);
 		if (line[0] == '\0' || line[0] == '\n')
 			continue;
-		for (index = 0; index < len; index++)
+
+		for (index = 0; index < strlen(line); index++)
 			if (line[index] == ' ' || index == len - 1)
 				count++;
 
@@ -94,13 +100,11 @@ int main(void)
 			token = strtok(NULL, " ");
 			index++;
 		}
-
 		path = args[0];
 		if (validate_path(path) == -1)
 			continue;
 
-		execute(args);
-
+		execute_command(args);
 		free(args);
 		free(line);
 
