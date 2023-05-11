@@ -50,7 +50,8 @@ void execute(char **args)
  * main - entry point for the simple shell program
  * Return: 0 is success else -1
  */
-int main() {
+int main(void)
+{
 	char *line = NULL;
 	size_t bufsize = 0;
 	ssize_t length = 0;
