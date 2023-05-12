@@ -24,7 +24,7 @@ int validate_path(char *path)
 }
 
 /**
- * execute - executes the passed command with the passed args
+ * execute_command - executes the passed command with the passed args
  * @args: the args to pass to the execve
  */
 void execute_command(char **args)
