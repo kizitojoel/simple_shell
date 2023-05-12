@@ -78,7 +78,7 @@ int main(void)
 
 	while (length != -1)
 	{
-		printf("$");
+		printf("$ ");
 		length = getline(&line, &bufsize, stdin);
 		_strip(line);
 		if (line[0] == '\0' || line[0] == '\n')
