@@ -99,6 +99,7 @@ int main(void)
 			index++;
 		}
 		path = args[0];
+        if (strcmp(path, "exit") == 0) break;
 		if (validate_path(path) == -1)
 			continue;
 
