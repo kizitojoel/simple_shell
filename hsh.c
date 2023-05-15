@@ -37,6 +37,7 @@ void execute_command(char **args)
 		perror("fork failed!\n");
 	else if (subprocess == 0)
 	{
+        printf("calling execve");
 		execve(args[0], args, NULL);
 		printf("Unknown command\n");
 		exit(0);
@@ -73,12 +74,12 @@ int main(void)
 {
 	ssize_t length = 0;
 	size_t index, bufsize = 0;
-	char **args, *token, *path, *line = NULL;
+	char **args, *token, *path, *line = NULL, cwd[1024];
 	int count = 0;
 
 	while (length != -1)
 	{
-		printf("$ ");
+        printf("%s$ ",getcwd(cwd, sizeof(cwd)));
 		length = getline(&line, &bufsize, stdin);
 		_strip(line);
 		if (line[0] == '\0' || line[0] == '\n')
@@ -88,7 +89,7 @@ int main(void)
 			if (line[index] == ' ' || index == strlen(line) - 1)
 				count++;
 
-		args = (char **) malloc(count * sizeof(char *));
+		args = (char **) malloc(count * sizeof(char *) + 1);
 		token = strtok(line, " ");
 		index = 0;
 		count = 0;
@@ -98,6 +99,7 @@ int main(void)
 			token = strtok(NULL, " ");
 			index++;
 		}
+        args[index] = NULL;
 		path = args[0];
         if (strcmp(path, "exit") == 0) break;
 		if (validate_path(path) == -1)
