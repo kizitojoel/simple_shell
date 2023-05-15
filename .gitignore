@@ -99,3 +99,4 @@ test.*
 /data/
 secret.*
 _putchar.c
+hsh

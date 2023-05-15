@@ -10,16 +10,7 @@ int main(int argc, char *argv[])
 {
 	int i = 0;
 
-	printf("Executing ls....\n");
 
-//	if (argc > 1)
-//	{
-//		for (i = 1; i < argc; i++)
-//		{
-//			printf("%s ", argv[i]);
-//		}
-//
-//	}
-//	printf("\n");
+
 	return (0);
 }
