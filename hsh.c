@@ -39,10 +39,10 @@ int main(void)
 		args[index] = NULL;
 		path = args[0];
 		if (strcmp(path, "exit") == 0) break;
-		if (validate_path(path) == -1)
+		if (_validate_path(path) == -1)
 			continue;
 
-		execute_command(args);
+		_execute_command(args);
 
 	}
 	free(args);
