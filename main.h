@@ -11,9 +11,12 @@
 #include<sys/wait.h>
 
 int main(void);
-void execute_command(char **args);
-int validate_path(char *path);
+void _execute_command(char **args);
+int _validate_path(char *path);
 int _strlen(const char *c);
 void _strip(char *str);
 char *_getcwd();
+char *_getcwd();
+char *_strcat(char *dest, char *src);
+
 #endif
