@@ -26,7 +26,7 @@ int main(void)
 			if (line[index] == ' ' || index == strlen(line) - 1)
 				count++;
 
-		args = (char **) malloc(count * sizeof(char *) + 1);
+		args = (char **) malloc(count * sizeof(char *) + 2);
 		token = strtok(line, " ");
 		index = 0;
 		count = 0;

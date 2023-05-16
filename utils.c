@@ -1,5 +1,7 @@
 #include "main.h"
 
+#define BUFFER_SIZE 4096
+
 /**
  * validate_path - check whether a path points to a file or not
  * @path: the string to check
@@ -66,7 +68,6 @@ void _strip(char *str)
     }
 }
 
-#define BUFFER_SIZE 1024
 char *_getcwd()
 {
     int fd;
