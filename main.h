@@ -14,5 +14,6 @@ int main(void);
 void execute_command(char **args);
 int validate_path(char *path);
 int _strlen(const char *c);
-
+void _strip(char *str);
+char *_getcwd();
 #endif

@@ -1,85 +1,22 @@
 #include "main.h"
 
 /**
- * validate_path - check whether a path points to a file or not
- * @path: the string to check
- * Return: 0 if the string is a valid file path else -1
- */
-int validate_path(char *path)
-{
-	struct stat path_stat;
-
-	if (stat(path, &path_stat) != 0)
-	{
-		printf("%s: command not found\n", path);
-		return (-1);
-	}
-	if (!S_ISREG(path_stat.st_mode))
-	{
-		printf("%s is not a file.\n", path);
-		return (-1);
-	}
-
-	return (0);
-}
-
-/**
- * execute_command - executes the passed command with the passed args
- * @args: the args to pass to the execve
- */
-void execute_command(char **args)
-{
-	pid_t subprocess;
-	int status;
-
-	subprocess = fork();
-	if (subprocess == -1)
-		perror("fork failed!\n");
-	else if (subprocess == 0)
-	{
-        printf("calling execve");
-		execve(args[0], args, NULL);
-		printf("Unknown command\n");
-		exit(0);
-	}
-	else
-		wait(&status);
-
-}
-
-/**
- * _strip - remove trailing spaces from string
- * @str: the string to strip
- */
-void _strip(char *str)
-{
-	int length = strlen(str);
-
-	if (length > 0)
-	{
-		while (length > 0 && (str[length - 1] == ' ' ||
-		str[length - 1] == '\n' || str[length - 1] == '\r'))
-		{
-			str[length - 1] = '\0';
-			length--;
-		}
-	}
-}
-
-/**
  * main - entry point for the simple shell program
- * Return: 0 is success else -1
+ * Return: 0 if success else -1
  */
 int main(void)
 {
 	ssize_t length = 0;
-	size_t index, bufsize = 0;
+	size_t index, bufsize, fd = 0;
 	char **args, *token, *path, *line = NULL, cwd[1024];
 	int count = 0;
 
+	fd = open("cwd.txt", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+	getcwd(cwd, sizeof(cwd));
+	write(fd, cwd, sizeof(cwd) - 1);
 	while (length != -1)
 	{
-        printf("%s$ ",getcwd(cwd, sizeof(cwd)));
+		printf("%s$ ",_getcwd());
 		length = getline(&line, &bufsize, stdin);
 		_strip(line);
 		if (line[0] == '\0' || line[0] == '\n')
@@ -99,16 +36,16 @@ int main(void)
 			token = strtok(NULL, " ");
 			index++;
 		}
-        args[index] = NULL;
+		args[index] = NULL;
 		path = args[0];
-        if (strcmp(path, "exit") == 0) break;
+		if (strcmp(path, "exit") == 0) break;
 		if (validate_path(path) == -1)
 			continue;
 
 		execute_command(args);
-		free(args);
-		free(line);
 
 	}
+	free(args);
+	free(line);
 	return (0);
 }
