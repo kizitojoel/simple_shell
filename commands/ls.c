@@ -1,23 +1,29 @@
 #include "main.h"
 
+#define GREEN "\033[1;32m"
+#define NORMAL "\033[0m"
+#define BLUE "\033[1;34m"
 /**
  * ls - lists the files that are present in the folder specified in input
+ * @path: the path to list
  *
  * Description: lists current files and folders separated by space
+ * Return: 0 if successful
  */
 int ls(char *path)
 {
 	DIR *dp;
+	struct stat filestat;
 	struct dirent *dir_entry = NULL;
 	char *str_buffer;
 
 	if (path == NULL)
-		return -1;
+		return (-1);
 	dp = opendir(path);
 	if (dp == NULL)
 	{
 		perror("Error: ");
-		return -1;
+		return (-1);
 	}
 	dir_entry = readdir(dp);
 	while (dir_entry)
@@ -26,11 +32,21 @@ int ls(char *path)
 		dir_entry = readdir(dp);
 		if (str_buffer[0] == '.')
 			continue;
-		while (*str_buffer != '\0')
+		stat(str_buffer, &filestat);
+		if (S_ISDIR(filestat.st_mode))
 		{
-			_putchar(*str_buffer);
-			str_buffer++;
+			_puts(BLUE);
+			_puts(str_buffer);
+			_puts(NORMAL);
 		}
+		else if (access(str_buffer, X_OK) == 0)
+		{
+			_puts(GREEN);
+			_puts(str_buffer);
+			_puts(NORMAL);
+		}
+		else
+			_puts(str_buffer);
 		_putchar(' ');
 	}
 	_putchar('\n');
@@ -45,7 +61,7 @@ int ls(char *path)
  *
  * Return: 0 if successful
  */
-int main(int argc, char __attribute__ (( unused )) **argv)
+int main(int argc, char __attribute__ ((unused)) **argv)
 {
 	int i = 0;
 	int print_count = 0;

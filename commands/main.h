@@ -14,5 +14,6 @@
 char *_strcat(char *dest, char *src);
 char *_getcwd();
 int _putchar(char c);
+int _puts(char *str);
 
 #endif
