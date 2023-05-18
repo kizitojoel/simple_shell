@@ -19,3 +19,4 @@ int _strlen(const char *c)
 	}
 	return (length);
 }
+
