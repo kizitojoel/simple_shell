@@ -13,7 +13,8 @@ char *_getcwd()
 	ssize_t bytes_read;
 	char *file_content = NULL, *cwd_file_name = "/cwd.txt";
 	size_t content_size = 0;
-    char *cwd_file_path = _strcat(getcwd(buffer, sizeof(buffer)), cwd_file_name);
+	char *cwd_file_path = _strcat(getcwd(buffer, sizeof(buffer)),
+								  cwd_file_name);
 
 	fd = open(cwd_file_path, O_RDONLY);
 

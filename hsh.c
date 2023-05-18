@@ -16,16 +16,14 @@ int main(void)
 	write(fd, cwd, sizeof(cwd) - 1);
 	while (length != -1)
 	{
-		printf("%s$ ",_getcwd());
+		printf("%s$ ", _getcwd());
 		length = getline(&line, &bufsize, stdin);
 		_strip(line);
 		if (line[0] == '\0' || line[0] == '\n')
 			continue;
-
 		for (index = 0; index < strlen(line); index++)
 			if (line[index] == ' ' || index == strlen(line) - 1)
 				count++;
-
 		args = (char **) malloc(count * sizeof(char *) + 2);
 		token = strtok(line, " ");
 		index = 0;
@@ -38,10 +36,10 @@ int main(void)
 		}
 		args[index] = NULL;
 		path = args[0];
-		if (strcmp(path, "exit") == 0) break;
+		if (strcmp(path, "exit") == 0)
+			break;
 		if (_validate_path(path) == -1)
 			continue;
-
 		_execute_command(args);
 
 	}

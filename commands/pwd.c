@@ -6,9 +6,8 @@
  * @argv: list of args
  * Return: always 0
  */
-int main(int __attribute__ ((unused)) argc, char __attribute__ ((unused)) *argv[])
-{
-    printf("%s\n", _getcwd());
-
-    return (0);
+int main(int __attribute__ ((unused))
+		 argc, char __attribute__ ((unused)) *argv[]) {
+	printf("%s\n", _getcwd());
+	return (0);
 }
