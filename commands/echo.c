@@ -4,7 +4,7 @@
  * main - displays a line of text
  * @argc: number of args
  * @argv: list of args
- * Return: always 0
+ * Return: 0 if success else -1
  */
 int main(int argc, char *argv[])
 {
