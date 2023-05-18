@@ -3,7 +3,7 @@
 #define BUFFER_SIZE 4096
 
 /**
- * main - entry point for cd
+ * main - changes the active directory
  * @argc: number of args
  * @argv: list of args
  * Return: always 0

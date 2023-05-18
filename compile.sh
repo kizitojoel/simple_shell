@@ -16,6 +16,5 @@ done
 # Compile each non_underscore file together with all underscore files
 for file in "${non_underscore_files[@]}"; do
   filename=$(basename "$file" .c)
-  echo "$filename"
   gcc -Wall -Werror -Wextra -pedantic -std=gnu89 commands/_*.c "$file" -o "$filename"
 done
