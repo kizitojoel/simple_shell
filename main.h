@@ -11,6 +11,9 @@
 #include <sys/wait.h>
 #include <dirent.h>
 
+/* External environment variable*/
+extern char **environ;
+
 int main(void);
 void _execute_command(char **args);
 int _validate_path(char *path);

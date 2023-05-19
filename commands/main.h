@@ -11,6 +11,8 @@
 #include <sys/wait.h>
 #include <dirent.h>
 
+extern char **environ;
+
 char *_strcat(char *dest, char *src);
 char *_getcwd();
 int _putchar(char c);
