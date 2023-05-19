@@ -16,6 +16,7 @@ extern char **environ;
 
 int main(void);
 void _execute_command(char **args);
+void execute_command(char **args);
 int _validate_path(char *path);
 int _strlen(const char *c);
 void _strip(char *str);

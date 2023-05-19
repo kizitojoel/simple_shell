@@ -8,14 +8,21 @@
  */
 int main(int argc, char *argv[])
 {
+	size_t  j;
 	int i;
+	char *word;
 
 	for (i = 1; i < argc; i++)
 	{
-		printf("%s", argv[i]);
+		word = argv[i];
+		for (j = 0; j < strlen(word); j++)
+		{
+			if(word[j] != '\'' && word[j] != '\"')
+				_putchar(word[j]);
+		}
 		if (i < argc - 1)
 			printf(" ");
 	}
-	printf("\n");
+	_putchar('\n');
 	return (0);
 }
