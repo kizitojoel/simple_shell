@@ -38,10 +38,7 @@ int main(void)
 		path = args[0];
 		if (strcmp(path, "exit") == 0)
 			break;
-		if (_validate_path(path) == -1)
-			continue;
-		_execute_command(args);
-
+		execute_command(args);
 	}
 	free(args);
 	free(line);
