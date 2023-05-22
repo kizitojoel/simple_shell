@@ -15,13 +15,16 @@
 extern char **environ;
 
 int main(void);
-void _execute_command(char **args);
-void execute_command(char **args);
+void _execute_command(char **args, char **env);
+void execute_command(char **args, char **env);
 int _validate_path(char *path);
 int _strlen(const char *c);
 void _strip(char *str);
 char *_getcwd();
 int _putchar(char c);
 char *_strcat(char *dest, char *src);
+
+/* Environment variables*/
+char **_copyenv(void);
 
 #endif

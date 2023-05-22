@@ -6,7 +6,7 @@
  * _execute_command - calls the command and handles piping
  * @args: arguments to pass tio the command
  */
-void _execute_command(char **args)
+void _execute_command(char **args, char **env)
 {
 	pid_t current;
 	int pipefd[2];
@@ -30,7 +30,7 @@ void _execute_command(char **args)
 		close(pipefd[0]);
 		/* Redirect the standard output to write to the pipe */
 		dup2(pipefd[1], STDOUT_FILENO);
-		execve(args[0], args, NULL);
+		execve(args[0], args, env);
 		printf("Unknown command\n");
 		exit(0);
 	}
@@ -51,7 +51,7 @@ void _execute_command(char **args)
  * execute_command - executes the passed command with the passed args
  * @args: the args to pass to the execve
  */
-void execute_command(char **args)
+void execute_command(char **args, char **env)
 {
 	char **sub_args = NULL;
 	int i = 0;
@@ -67,7 +67,7 @@ void execute_command(char **args)
 	{
 		if (strcmp(args[i], "|") == 0)
 		{
-			_execute_command(sub_args);
+			_execute_command(sub_args, env);
 			count = 0;
 			continue;
 		}
@@ -86,6 +86,6 @@ void execute_command(char **args)
 		strcpy(sub_args[count], args[i]);
 		count++;
 	}
-	_execute_command(sub_args);
+	_execute_command(sub_args, env);
 	free(sub_args);
 }
