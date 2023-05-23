@@ -1,6 +1,15 @@
 #include "main.h"
 
 /**
+ * print_path - prints the current working directory
+ */
+void print_path(void)
+{
+	_puts(_getcwd());
+	_puts("$ ");
+}
+
+/**
  * main - entry point for the simple shell program
  * Return: 0 if success else -1
  */
@@ -16,15 +25,12 @@ int main(void)
 	write(fd, cwd, sizeof(cwd) - 1);
 	while (length != -1)
 	{
-        if (isatty(STDIN_FILENO)) {
-            _puts(_getcwd());
-            _puts("$ ");
-        }
+		if (isatty(STDIN_FILENO))
+			print_path();
 		length = getline(&line, &bufsize, stdin);
-        if(length >= MAX_INPUT) break;
 		_strip(line);
 		if (line[0] == '\0' || line[0] == '\n')
-            continue;
+			continue;
 		for (index = 0; index < strlen(line); index++)
 			if (line[index] == ' ' || index == strlen(line) - 1)
 				count++;
@@ -43,7 +49,8 @@ int main(void)
 		if (strcmp(path, "exit") == 0)
 			break;
 		execute_command(args, environ);
-        if (!isatty(STDIN_FILENO)) break;
+		if (!isatty(STDIN_FILENO))
+			break;
 	}
 	free(args);
 	free(line);
