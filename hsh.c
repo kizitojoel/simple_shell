@@ -16,11 +16,15 @@ int main(void)
 	write(fd, cwd, sizeof(cwd) - 1);
 	while (length != -1)
 	{
-		printf("%s$ ", _getcwd());
+        if (isatty(STDIN_FILENO)) {
+            _puts(_getcwd());
+            _puts("$ ");
+        }
 		length = getline(&line, &bufsize, stdin);
+        if(length >= MAX_INPUT) break;
 		_strip(line);
 		if (line[0] == '\0' || line[0] == '\n')
-			continue;
+            continue;
 		for (index = 0; index < strlen(line); index++)
 			if (line[index] == ' ' || index == strlen(line) - 1)
 				count++;
@@ -39,6 +43,7 @@ int main(void)
 		if (strcmp(path, "exit") == 0)
 			break;
 		execute_command(args, environ);
+        if (!isatty(STDIN_FILENO)) break;
 	}
 	free(args);
 	free(line);

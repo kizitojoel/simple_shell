@@ -10,11 +10,11 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <dirent.h>
+#include <limits.h>
 
 /* External environment variable*/
 extern char **environ;
 
-int main(void);
 void _execute_command(char **args, char **env);
 void execute_command(char **args, char **env);
 int _validate_path(char *path);
@@ -23,6 +23,7 @@ void _strip(char *str);
 char *_getcwd();
 int _putchar(char c);
 char *_strcat(char *dest, char *src);
+int _puts(char *str);
 
 /* Environment variables*/
 char **_copyenv(void);
