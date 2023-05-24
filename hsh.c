@@ -28,6 +28,12 @@ int main(void)
 		if (isatty(STDIN_FILENO))
 			print_path();
 		length = getline(&line, &bufsize, stdin);
+		if (length == -1)
+		{
+			free(line);
+			_putchar('\n');
+			return (0);
+		}
 		_strip(line);
 		if (line[0] == '\0' || line[0] == '\n')
 			continue;
