@@ -17,5 +17,7 @@ char *_strcat(char *dest, char *src);
 char *_getcwd();
 int _putchar(char c);
 int _puts(char *str);
+char *search_command(char *path);
+int _search_command(const char *command, char *result);
 
 #endif

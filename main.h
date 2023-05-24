@@ -18,6 +18,7 @@ extern char **environ;
 void _execute_command(char **args, char **env);
 void execute_command(char **args, char **env);
 char *_compute_path(char *path);
+int search_command(const char *command, char *result);
 int _strlen(const char *c);
 void _strip(char *str);
 char *_getcwd();
