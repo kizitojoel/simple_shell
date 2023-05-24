@@ -12,11 +12,13 @@ void _execute_command(char **args, char **env)
 	pid_t current;
 	int pipefd[2];
 	char buffer[1024];
+	char *path;
 	ssize_t nbytes;
 	/* Not a valid file path */
-	if (_validate_path(args[0]) == -1)
+	path = _compute_path(args[0]);
+	if (path == NULL)
 		return;
-
+	args[0] = path;
 	if (pipe(pipefd) == -1)
 	{
 		perror("pipe");
@@ -31,7 +33,7 @@ void _execute_command(char **args, char **env)
 		close(pipefd[0]);
 		/* Redirect the standard output to write to the pipe */
 		dup2(pipefd[1], STDOUT_FILENO);
-		execve(args[0], args, env);
+		execve(path, args, env);
 		printf("Unknown command\n");
 		exit(0);
 	}

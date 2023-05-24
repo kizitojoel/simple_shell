@@ -6,21 +6,14 @@
  * @argv: list of args
  * Return: Always 0
  */
-int main(int argc, char *argv[])
+int main(int __attribute__ ((unused)) argc, char *argv[])
 {
-	int i;
+	char *path = search_command(argv[0]);
 
-	if (argc < 2)
-	{
-	printf("touch: missing file operand");
-	return (-1);
-	}
+	argv[0] = path;
+
 	chdir(_getcwd());
-	for (i = 0; i < argc; i++)
-	{
-		open(argv[i], O_CREAT | O_RDWR | O_TRUNC);
-	}
+	execve(path,argv,environ);
 
 	return (0);
-
 }
