@@ -5,6 +5,7 @@
 /**
  * _execute_command - calls the command and handles piping
  * @args: arguments to pass tio the command
+ * @env: the environment variables from the hsh main function
  */
 void _execute_command(char **args, char **env)
 {
@@ -50,6 +51,7 @@ void _execute_command(char **args, char **env)
 /**
  * execute_command - executes the passed command with the passed args
  * @args: the args to pass to the execve
+ * @env: the environment variables
  */
 void execute_command(char **args, char **env)
 {
