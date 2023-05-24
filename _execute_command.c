@@ -16,9 +16,9 @@ void _execute_command(char **args, char **env)
 	ssize_t nbytes;
 	/* Not a valid file path */
 	path = _compute_path(args[0]);
-	if(path == NULL)
+	if (path == NULL)
 		return;
-    args[0] = path;
+	args[0] = path;
 	if (pipe(pipefd) == -1)
 	{
 		perror("pipe");

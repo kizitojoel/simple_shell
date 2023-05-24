@@ -2,6 +2,12 @@
 
 #define MAX_PATH_LENGTH 1024
 
+/**
+ * search_command - searched a command in the system's path
+ * @command: the command to search
+ * @result: variable to store the path if found
+ * Return: 0 if success else -1
+ */
 int search_command(const char *command, char *result)
 {
 	char *path = getenv("PATH");
@@ -12,7 +18,7 @@ int search_command(const char *command, char *result)
 	if (path == NULL)
 	{
 		printf("Error: PATH environment variable not found.\n");
-		return -1;
+		return (-1);
 	}
 
 	path_copy = strdup(path);
@@ -26,7 +32,7 @@ int search_command(const char *command, char *result)
 		{
 			strncpy(result, file_path, MAX_PATH_LENGTH);
 			free(path_copy);
-			return 0;
+			return (0);
 		}
 
 		dir = strtok(NULL, ":");
@@ -34,7 +40,7 @@ int search_command(const char *command, char *result)
 
 	free(path_copy);
 
-	return -1;
+	return (-1);
 }
 
 /**
