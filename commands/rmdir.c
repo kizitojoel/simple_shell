@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * main - lists files and directories in cwd or specified dir
+ * main - deletes a directory
  * @argc: number of args
  * @argv: a list of args
  * Return: Always 0
