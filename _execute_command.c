@@ -43,7 +43,10 @@ void _execute_command(char **args, char **env)
 		close(pipefd[1]);
 		/* Read from the pipe and print the output */
 		while ((nbytes = read(pipefd[0], buffer, sizeof(buffer))) > 0)
+		{
 			write(STDOUT_FILENO, buffer, nbytes);
+			printf("Buffer complete\n");
+		}
 		close(pipefd[0]);
 		/* Wait for the child to finish */
 		wait(NULL);
@@ -59,6 +62,7 @@ void execute_command(char **args, char **env)
 {
 	char **sub_args = NULL;
 	char **test = NULL;
+	char *test_mem = NULL;
 	int i = 0;
 	int loop_count = 0;
 	int numStrings = 0, count = 0;
@@ -88,18 +92,23 @@ void execute_command(char **args, char **env)
 		}
 		else
 			sub_args = test;
-		sub_args[count] = (char *)malloc(MAX_LENGTH * sizeof(char));
-		if (sub_args[count] == NULL)
+		test_mem = (char *) malloc(MAX_LENGTH * sizeof(char));
+		if (test_mem == NULL)
 		{
+			for (loop_count = 0; sub_args[loop_count] != NULL; loop_count++)
+				free(sub_args[loop_count]);
+			free(sub_args);
 			fprintf(stderr, "Memory allocation failed.\n");
 			return;
 		}
+		else
+			sub_args[count] = test_mem;
 		strcpy(sub_args[count], args[i]);
 		count++;
 	}
 	sub_args[count] = NULL;
 	_execute_command(sub_args, env);
-	for (i = 0; sub_args[i] != NULL; i++)
-		free(sub_args[i]);
+	for (loop_count = 0; loop_count < count; loop_count++)
+		free(sub_args[loop_count]);
 	free(sub_args);
 }
