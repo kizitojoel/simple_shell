@@ -58,6 +58,7 @@ char *_compute_path(char *path)
 		if (search_command(path, result) != 0)
 		{
 			printf("%s: command not found\n", path);
+			free(result);
 			return (NULL);
 		}
 		else
@@ -66,7 +67,9 @@ char *_compute_path(char *path)
 	if (!S_ISREG(path_stat.st_mode))
 	{
 		printf("%s is not a file..\n", path);
+		free(result);
 		return (NULL);
 	}
+	free(result);
 	return (path);
 }

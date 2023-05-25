@@ -58,7 +58,9 @@ void _execute_command(char **args, char **env)
 void execute_command(char **args, char **env)
 {
 	char **sub_args = NULL;
+	char **test = NULL;
 	int i = 0;
+	int loop_count = 0;
 	int numStrings = 0, count = 0;
 
 	while (args[i] != NULL)
@@ -75,12 +77,17 @@ void execute_command(char **args, char **env)
 			count = 0;
 			continue;
 		}
-		sub_args = (char **)realloc(sub_args, (count + 1) * sizeof(char *));
-		if (sub_args == NULL)
+		test = (char **)realloc(sub_args, (count + 2) * sizeof(char *));
+		if (test == NULL)
 		{
+			for (loop_count = 0; sub_args[loop_count] != NULL; loop_count++)
+				free(sub_args[loop_count]);
+			free(sub_args);
 			fprintf(stderr, "Memory allocation failed.\n");
 			return;
 		}
+		else
+			sub_args = test;
 		sub_args[count] = (char *)malloc(MAX_LENGTH * sizeof(char));
 		if (sub_args[count] == NULL)
 		{
@@ -90,6 +97,9 @@ void execute_command(char **args, char **env)
 		strcpy(sub_args[count], args[i]);
 		count++;
 	}
+	sub_args[count] = NULL;
 	_execute_command(sub_args, env);
+	for (i = 0; sub_args[i] != NULL; i++)
+		free(sub_args[i]);
 	free(sub_args);
 }

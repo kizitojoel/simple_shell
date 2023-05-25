@@ -5,7 +5,6 @@
  */
 void print_path(void)
 {
-	_puts(_getcwd());
 	_puts("$ ");
 }
 
@@ -16,13 +15,15 @@ void print_path(void)
 int main(void)
 {
 	ssize_t length = 0;
-	size_t index, bufsize, fd = 0;
-	char **args, *token, *path, *line = NULL, cwd[1024];
+	size_t index, bufsize, __attribute__((unused)) fd = 0;
+	char **args, *token, *path, *line = NULL;/* cwd[1024];*/
 	int count = 0;
 
+	/**
 	fd = open("cwd.txt", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	getcwd(cwd, sizeof(cwd));
 	write(fd, cwd, sizeof(cwd) - 1);
+	*/
 	while (length != -1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -35,7 +36,7 @@ int main(void)
 		for (index = 0; index < strlen(line); index++)
 			if (line[index] == ' ' || index == strlen(line) - 1)
 				count++;
-		args = (char **) malloc(count * sizeof(char *) + 2);
+		args = (char **) malloc((count + 1) * sizeof(char *));
 		token = strtok(line, " ");
 		index = 0;
 		count = 0;
