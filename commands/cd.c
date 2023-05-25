@@ -20,6 +20,9 @@ int main(int argc, char *argv[])
 	if (argc == 1)
 	{
 		chdir(home_dir);
+		getcwd(cwd, sizeof(cwd));
+		fd = open(cwd_file_path, O_WRONLY | O_CREAT);
+		write(fd, cwd, sizeof(cwd) - 1);
 		return (0);
 	}
 	if (strcmp(argv[1], ".") == 0)
