@@ -1,28 +1,19 @@
 #include "main.h"
 
 /**
- * main - displays a line of text
+ * main - display a line on the standard output
  * @argc: number of args
- * @argv: list of args
- * Return: 0 if success else -1
+ * @argv: a list of args
+ * Return: Always 0
  */
-int main(int argc, char *argv[])
+int main(int __attribute__ ((unused)) argc, char *argv[])
 {
-	size_t  j;
-	int i;
-	char *word;
+	char *path = search_command(argv[0]);
 
-	for (i = 1; i < argc; i++)
-	{
-		word = argv[i];
-		for (j = 0; j < strlen(word); j++)
-		{
-			if(word[j] != '\'' && word[j] != '\"')
-				_putchar(word[j]);
-		}
-		if (i < argc - 1)
-			printf(" ");
-	}
-	_putchar('\n');
+	argv[0] = path;
+
+	chdir(_getcwd());
+	execve(path,argv,environ);
+
 	return (0);
 }
