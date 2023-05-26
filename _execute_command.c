@@ -45,7 +45,6 @@ void _execute_command(char **args, char **env)
 		while ((nbytes = read(pipefd[0], buffer, sizeof(buffer))) > 0)
 		{
 			write(STDOUT_FILENO, buffer, nbytes);
-			printf("Buffer complete\n");
 		}
 		close(pipefd[0]);
 		/* Wait for the child to finish */
